@@ -4,6 +4,8 @@ A natively multimodal ComfyUI custom node that integrates **Google Gemini** mode
 
 ![ComfyUI Gemini Multimodal Node](https://img.shields.io/badge/ComfyUI-Custom_Node-blue) ![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue) ![License](https://img.shields.io/badge/license-MIT-green)
 
+![Gemini Multimodal Node](assets/multimodal_node.jpg)
+
 ---
 
 ## Features
@@ -51,6 +53,20 @@ Search for **"Gemini Multimodal"** in ComfyUI Manager and click Install.
    cd comfyui-gemini-multimodal
    pip install -r requirements.txt
    ```
+
+4. Restart ComfyUI.
+
+### Portable ComfyUI Installation
+
+If you are using the **portable/standalone version** of ComfyUI, you must install the dependencies using the embedded Python interpreter:
+
+1. Navigate to the `python_embeded` folder inside your ComfyUI installation directory
+2. Open a terminal or command prompt from that folder
+3. Run the following command:
+   ```bash
+   python.exe -m pip install -r ComfyUI\custom_nodes\comfyui-gemini-multimodal\requirements.txt
+   ```
+   > Adjust the path to `requirements.txt` if your folder structure differs.
 
 4. Restart ComfyUI.
 
