@@ -21,25 +21,23 @@ app.registerExtension({
             return result;
         };
 
-        // When the user clicks to edit, the widget creates a temporary input element.
-        // Use a MutationObserver on the widget's inputEl (if it appears) or
-        // override the mouse handler to catch it.
-        const originalMouseDown = apiKeyWidget.mouse;
-        apiKeyWidget.mouse = function (event, pos, node) {
-            const result = originalMouseDown?.call(this, event, pos, node);
-            // After click, ComfyUI may create a prompt dialog or inline input.
-            // Schedule a check to find and mask any spawned input element.
-            setTimeout(() => {
-                const inputs = document.querySelectorAll(
-                    'input[type="text"], textarea'
-                );
-                inputs.forEach((el) => {
-                    if (el.value === apiKeyWidget.value) {
-                        el.type = "password";
+        // Use a MutationObserver to catch any spawned input elements and mask them.
+        // This avoids overriding mouse handlers which breaks node drag/selection.
+        const observer = new MutationObserver((mutations) => {
+            for (const mutation of mutations) {
+                for (const addedNode of mutation.addedNodes) {
+                    if (addedNode.nodeType !== Node.ELEMENT_NODE) continue;
+                    const inputs = addedNode.matches?.("input, textarea")
+                        ? [addedNode]
+                        : Array.from(addedNode.querySelectorAll?.("input, textarea") || []);
+                    for (const el of inputs) {
+                        if (el.value === apiKeyWidget.value && el.type !== "password") {
+                            el.type = "password";
+                        }
                     }
-                });
-            }, 50);
-            return result;
-        };
+                }
+            }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
     },
 });
