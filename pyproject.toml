@@ -1,0 +1,13 @@
+[project]
+name = "comfyui-gemini-multimodal"
+version = "1.0.0"
+description = "A multimodal Google Gemini custom node for ComfyUI that analyzes image, audio, and video data to generate complex image prompts."
+requires-python = ">=3.10"
+dependencies = [
+    "google-genai>=1.0.0",
+    "tenacity>=8.0.0",
+    "imageio[ffmpeg]>=2.30.0",
+]
+
+[tool.comfy]
+web = "js"
